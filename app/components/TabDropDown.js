@@ -6,6 +6,7 @@ const TabContainer = Styled.div`
 `;
 const TabStyled = Styled.span`
     padding: 0px 4px;
+    margin: 0px 4px;
     color: ${({ selected }) => (selected ? "#DBDFE3" : "#A4A9AC")};
     font-size: 12px;
     border-bottom: 1px solid ${({ selected }) => (selected ? "#DBDFE3" : "#1b262d")};

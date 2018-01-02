@@ -15,7 +15,7 @@ export default class WebSocket {
     this.w = w;
     w.addEventListener("message", response => {
       let data = JSON.parse(response.data);
-      console.log("data", data);
+      // console.log("data", data);
       if (Array.isArray(data)) {
         const [chanId, ...restData] = data;
         this.chanIds[chanId](...restData);
@@ -36,11 +36,12 @@ export default class WebSocket {
   register = cb => {
     this.delayedCallbacks.push(cb);
   };
-  listen = ({ channel, symbol }, cb) => {
+  listen = ({ channel, symbol, ...rest }, cb) => {
     let msg = JSON.stringify({
       event: "subscribe",
       channel,
-      symbol
+      symbol,
+      ...rest
     });
     this.channels[channel] = this.channels[channel] || {};
     this.channels[channel][symbol] = cb;

@@ -1,28 +1,9 @@
 import React from "react";
-import Styled from "styled-components";
+import List from "../../components/List";
+import Card from "../../components/ListCard";
+import Row from "../../components/ListRow";
+import Arrow from "../../components/DownUpArrow";
 import PropTypes from "prop-types";
-// const {fetch} = require("whatwg-fetch")
-const Card = Styled.span`
-  color: #899094;
-  padding: 4px 5px;
-  font-size: 11px;
-  flex:1;
-  justify-content:center;
-  display:flex;
-  text-transform: uppercase;
-`;
-const Row = Styled.div`
-  flex-direction:row
-`;
-const Arrow = Styled.div`
-  border: solid ${({ down }) => (down ? "#83332f" : "#77903e")};
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-  align-self:center;
-  justify-self:center;
-  transform: ${({ down }) => (down ? "rotate(45deg)" : "rotate(-135deg)")};
-`;
 export default class TradeList extends React.PureComponent {
   state = {
     data: []
@@ -52,12 +33,6 @@ export default class TradeList extends React.PureComponent {
     });
   };
   componentDidMount() {
-    // fetch("https://api.bitfinex.com/v2/trades/tBTCUSD/hist").then((response)=>{
-    //   // console.log("response>>>>>>>>>>>>", response.json())
-    //   return response.json()
-    // }).then((response)=>{
-    //   console.log(response);
-    // })
     this.initializeSocket();
   }
   componentWillUnmount() {
@@ -75,20 +50,21 @@ export default class TradeList extends React.PureComponent {
           <Card>Price</Card>
           <Card>Amount</Card>
         </Row>
-        {data.length === 0
-          ? <div>Loading....</div>
-          : data.map(row => {
-              let amount = row[2];
-              let date = new Date(row[1]);
-              return (
-                <Row key={row[0]}>
-                  <Arrow down={amount < 0} />
-                  <Card>{date.toLocaleTimeString()}</Card>
-                  <Card>{row[3]}</Card>
-                  <Card>{Math.abs(amount).toFixed(5)}</Card>
-                </Row>
-              );
-            })}
+        <List
+          data={data}
+          renderRow={row => {
+            let amount = row[2];
+            let date = new Date(row[1]);
+            return (
+              <Row key={row[0]}>
+                <Arrow down={amount < 0} />
+                <Card>{date.toLocaleTimeString()}</Card>
+                <Card>{row[3]}</Card>
+                <Card>{Math.abs(amount).toFixed(5)}</Card>
+              </Row>
+            );
+          }}
+        />
       </div>
     );
   }

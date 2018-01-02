@@ -3,7 +3,7 @@ import Styled from "styled-components";
 const Header = Styled.div`
     flex-direction: row;
     margin:0px 10px 4px 10px;
-    padding:2px 0px;
+    padding-top:2px;
     border-bottom: 1px solid #36464f;
 `;
 const Body = Styled.span`
@@ -16,8 +16,9 @@ const TitleContainer = Styled.div`
 `;
 const Title = Styled.span`
   text-transform : uppercase;
-  font-size:14px;
-  margin-left:6px
+  font-size:13px;
+  margin-left:10px;
+  color:${({ open }) => (open ? "#fff" : "#c4c7c9")};
 `;
 const Container = Styled.div`
     background-color:#1b262d;
@@ -56,7 +57,7 @@ export default class DropDown extends React.Component {
         <Header>
           <TitleContainer onClick={this.toggle}>
             <Arrow open={open} />
-            <Title>{title}</Title>
+            <Title open={open}>{title}</Title>
           </TitleContainer>
           {open && actions}
         </Header>
